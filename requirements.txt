@@ -1,0 +1,7 @@
+#transformers #pip install -U git+https://github.com/huggingface/transformers.git
+streamlit
+accelerate
+auto-gptq
+optimum
+streamlit-option-menu
+bitsandbytes
