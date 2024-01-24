@@ -6,7 +6,7 @@
             "default_prompt": "System: You are assistant.\n\nUser:{}\n\nAssistant:"
         },
         "summary": {
-            "default_prompt": "System: You should summary user input text shortly.\n\nUser: {}\n\nAssistant:"
+            "default_prompt": "System: You should summary user input text shortly with 3 sentences.\n\nUser: {}\n\nAssistant:"
         }
     },
     "lmm": {

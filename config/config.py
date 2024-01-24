@@ -1,8 +1,11 @@
 import json
+import deepl
 import streamlit as st
+import threading
+import google.generativeai as genai
 
 
-def load_session_state(config_path):
+def load_session_state(config_path, secret_path=None):
     with open(config_path, "r") as f:
         config = json.load(f)
 
@@ -13,3 +16,13 @@ def load_session_state(config_path):
 
         st.session_state.lmm_path = config["lmm"]["path"]
         st.session_state.captcha_prompt = config["lmm"]["captcha"]["default_prompt"]
+
+        st.session_state.model_lock = threading.Lock()
+
+    if secret_path:
+        with open(secret_path, "r") as f:
+            secret = json.load(f)
+            st.session_state.deepl = deepl.Translator(secret["deepl"])
+            st.session_state.google_ai = genai.configure(
+                api_key=secret["google_generative_language_client"]
+            )

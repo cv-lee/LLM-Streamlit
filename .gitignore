@@ -1,3 +1,4 @@
 ckpt/*
+config/secrets/*
 !**/.gitkeep
 **/__pycache__

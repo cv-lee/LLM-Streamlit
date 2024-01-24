@@ -5,3 +5,5 @@ auto-gptq
 optimum
 streamlit-option-menu
 bitsandbytes
+deepl
+google-generativeai
