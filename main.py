@@ -17,11 +17,14 @@ def load_resources():
 generate_lock = threading.Lock()
 
 def generate_response(tokenizer, model, messages, context=""):
-    prompt = f"Context: {context}\n\n" if context else ""
-    prompt += f"Human: {messages[-1]['content']}\n\nAssistant:"
+    prompt = ""
+    for message in messages:
+        prompt += f"{message['role']}: {message['content']}\n\n"
+    prompt += f"Context: {context}\n\n" if context else ""
+    prompt += "Assistant:"
     
     try:
-        with generate_lock:  # 락을 사용하여 동기화
+        with generate_lock:
             input_ids = tokenizer.encode(prompt, return_tensors="pt").to(model.device)
             output = model.generate(input_ids, max_new_tokens=2048, do_sample=True, temperature=0.6)
     except:
@@ -37,10 +40,9 @@ def main():
     
     use_rag = st.sidebar.toggle("Use RAG", value=True)
     if st.sidebar.button("Clear Conversation"):
-        st.session_state.messages = [st.session_state.messages[0]]  # Keep only the system message
-
-    for i, message in enumerate(st.session_state.messages):
-        if i == 0: continue # Hide the system message
+        st.session_state.messages = [st.session_state.messages[0]]
+    
+    for message in st.session_state.messages[1:]:
         with st.chat_message(message["role"]):
             st.write(message["content"])
     
@@ -48,16 +50,15 @@ def main():
         st.session_state.messages.append({"role": "user", "content": user_input})
         with st.chat_message("user"):
             st.write(user_input)
-            print(user_input)
+        
         with st.chat_message("assistant"):
             context = ""
             if use_rag:
                 docs = vectorstore.similarity_search(user_input, k=3)
                 context = "참고파일(RAG):\n" + "\n".join([doc.page_content for doc in docs])
-            response = generate_response(tokenizer, model, st.session_state.messages, context)
+            response = generate_response(tokenizer, model, st.session_state.messages[1:], context)
             st.write(response)
-            print(response)
-
+        
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 if __name__ == "__main__":
