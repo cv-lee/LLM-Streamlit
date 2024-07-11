@@ -13,7 +13,7 @@ def create_vectorstore():
     texts = text_splitter.split_documents(documents)
 
     # 임베딩 모델 로드
-    embeddings = HuggingFaceEmbeddings(model_name='BM-K/KoSimCSE-roberta-multitask')
+    embeddings = HuggingFaceEmbeddings(model_name='./ckpt/KoSimCSE-roberta-multitask')
 
     # 벡터 저장소 생성
     vectorstore = FAISS.from_documents(texts, embeddings)

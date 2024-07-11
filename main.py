@@ -28,6 +28,8 @@ def main():
         st.session_state.messages = []
 
     use_rag = st.sidebar.toggle("Use RAG", value=True)
+    if st.sidebar.button("Clear Conversation"):
+        st.session_state.messages = [st.session_state.messages[0]]  # Keep only the system message
     
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
@@ -37,7 +39,8 @@ def main():
         st.session_state.messages.append({"role": "user", "content": user_input})
         with st.chat_message("user"):
             st.write(user_input)
-        
+            print(user_input)
+
         with st.chat_message("assistant"):
             context = ""
             if use_rag:
@@ -45,7 +48,7 @@ def main():
                 context = "참고파일(RAG):\n" + "\n".join([doc.page_content for doc in docs])
             response = generate_response(tokenizer, model, st.session_state.messages, context)
             st.write(response)
-        
+            print(response)
         st.session_state.messages.append({"role": "assistant", "content": response})
 
 if __name__ == "__main__":
