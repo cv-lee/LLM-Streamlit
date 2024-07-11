@@ -2,3 +2,8 @@ transformers
 huggingface_hub
 streamlit
 langchain
+langchain-community
+langchain-huggingface
+unstructured
+sentence-transformers
+faiss-gpu
