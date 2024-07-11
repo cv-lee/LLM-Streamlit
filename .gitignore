@@ -1,4 +1,4 @@
 ckpt/*
-.streamlit
+.streamlit/*
 !**/.gitkeep
 **/__pycache__
