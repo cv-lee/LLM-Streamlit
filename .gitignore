@@ -1,6 +1,6 @@
 ckpt/
 !ckpt/.gitkeep
 data/
-!data/.gitkepp
+!data/.gitkeep
 .streamlit/
 **/__pycache__
