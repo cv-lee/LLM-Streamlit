@@ -1,4 +1,4 @@
 ckpt/*
-config/secrets/*
+.streamlit
 !**/.gitkeep
 **/__pycache__
