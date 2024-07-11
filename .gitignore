@@ -1,4 +1,6 @@
-ckpt/*
-data/*
-.streamlit/*
+ckpt/
+!ckpt/.gitkeep
+data/
+!data/.gitkepp
+.streamlit/
 **/__pycache__
